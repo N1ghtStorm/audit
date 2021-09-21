@@ -11,18 +11,24 @@ use frame_support::{
 
 use frame_support::sp_runtime::RuntimeDebug;
 
+#[cfg(feature = "std")]
+use serde::{Deserialize, Serialize};
+
 construct_fixed_hash! {
     /// 256 bit hash type for signing files
+    #[cfg_attr(feature = "std", derive(Serialize, Deserialize))]
     #[derive(Encode, Decode)]
     pub struct H256(32);
 }
 
+#[cfg_attr(feature = "std", derive(Serialize, Deserialize))]
 #[derive(Encode, Decode, Clone, Default, Eq, PartialEq, RuntimeDebug)]
 pub struct SigStruct<AccountId> {
     pub address: AccountId,
     pub signed: bool,
 }
 
+#[cfg_attr(feature = "std", derive(Serialize, Deserialize))]
 #[derive(Encode, Decode, Clone, Default, Eq, PartialEq, RuntimeDebug)]
 pub struct VersionStruct<AccountId> {
     pub tag: Vec<u8>,
@@ -31,6 +37,7 @@ pub struct VersionStruct<AccountId> {
 }
 
 /// Main File Domain
+#[cfg_attr(feature = "std", derive(Serialize, Deserialize))]
 #[derive(Encode, Decode, Clone, Default, Eq, PartialEq, RuntimeDebug)]
 pub struct FileStruct<AccountId> where AccountId: PartialEq {
     pub owner: AccountId,
