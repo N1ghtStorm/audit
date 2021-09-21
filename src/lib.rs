@@ -53,11 +53,13 @@ decl_error! {
     }
 }
 
-//#[cfg(test)]
-#[cfg(not(feature = "std"))]
-impl<T> IntegrityTest for Module<T> {
-    fn integrity_test() {}
-}
+// #[cfg(test)]
+// // #[cfg(not(feature = "std"))]
+// // #![cfg(feature = "std")]
+// impl<T> IntegrityTest for Module<T> {
+//      fn integrity_test() {}
+// }
+
 
 
 decl_module! {
@@ -141,7 +143,7 @@ impl<T: Config> Module<T> {
         FileByID::<T>::get(id).owner == *address
     }
 
-    #[cfg(test)]
+    // #[cfg(test)]
     pub fn get_file_by_id(id: u32) -> FileStruct<<T as frame_system::Config>::AccountId> {
         FileByID::<T>::get(id)
     }
