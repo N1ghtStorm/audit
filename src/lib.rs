@@ -21,6 +21,8 @@ use frame_support::sp_std::{
         PartialEq}, 
 };
 
+use frame_support::traits::IntegrityTest;
+
 use file::{FileStruct, H256};
 
 #[cfg(test)]
@@ -50,6 +52,13 @@ decl_error! {
         AddressNotOwner
     }
 }
+
+//#[cfg(test)]
+#[cfg(not(feature = "std"))]
+impl<T> IntegrityTest for Module<T> {
+    fn integrity_test() {}
+}
+
 
 decl_module! {
     pub struct Module<T: Config> for enum Call where origin: T::Origin {
@@ -107,6 +116,7 @@ decl_module! {
                 }
             )?;
         }
+
     }
 }
 
