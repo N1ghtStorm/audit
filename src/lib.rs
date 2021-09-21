@@ -24,23 +24,23 @@ use frame_support::sp_std::{
 use file::{FileStruct, H256};
 
 #[cfg(test)]
-mod mock;
+pub mod mock;
 
 #[cfg(test)]    
-mod tests;
-mod file;
+pub mod tests;
+pub mod file;
 
 pub trait Config: frame_system::Config {}
 
 decl_storage! {
-    trait Store for Module<T: Config> as Audit {
+    pub trait Store for Module<T: Config> as Audit {
         /// Storage map for file IDs
-        FileByID
+        pub FileByID
             get(fn file_by_id):
             map hasher(blake2_128_concat) u32 => FileStruct<T::AccountId>;   
 
         /// Last Id of created file
-        LastID: u32;
+        pub LastID: u32;
     }
 }
 
@@ -132,7 +132,7 @@ impl<T: Config> Module<T> {
     }
 
     #[cfg(test)]
-    fn get_file_by_id(id: u32) -> FileStruct<<T as frame_system::Config>::AccountId> {
+    pub fn get_file_by_id(id: u32) -> FileStruct<<T as frame_system::Config>::AccountId> {
         FileByID::<T>::get(id)
     }
 }
